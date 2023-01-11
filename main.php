@@ -81,41 +81,42 @@ echo lion::run3();
 
 //const
 
-// class Circle{
-//     public const PI = 3.14;
-//     public function surface($jari){
-//         echo self::PI * $jari * $jari;
-//     }
-// }
+class Circle{
+    public const PI = 3.14;
+    public function surface($jari){
+        echo self::PI * $jari * $jari;
+    }
+}
 
-// $circle = new Circle;
-// echo Circle::PI;
-// echo PHP_EOL;
-// $circle->surface(10);
-// echo PHP_EOL;
+$circle = new Circle;
+echo Circle::PI;
+echo PHP_EOL;
+$circle->surface(10);
+echo PHP_EOL;
 
 
-// //penggunaan $this 
-// class printer{
-//     private $content;
-//     public function setContent($content){
-//         $this->content = $content;
-//     }
-//     public function cetak(){
-//         echo $this->content;
-//     }
-// }
+//penggunaan $this 
+class printer{
+    private $content;
+    public function setContent($content){
+        $this->content = $content;
+    }
+    public function cetak(){
+        echo $this->content;
+    }
+}
 
 class Lingkaran{
     private $PI = 3.14;
     public function luas($jari){
-      echo $this->PI * $jari * $jari;
+      return $this->PI * $jari * $jari;
     }
     public function phi(){
         echo $this->PI;
     }
 }
 $lingkaran = new lingkaran();
-echo $lingkaran->luas(10);
+$test = $lingkaran->luas(10);
+echo $test;
 echo $lingkaran->phi();
 ?>
