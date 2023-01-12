@@ -119,4 +119,105 @@ $lingkaran = new lingkaran();
 $test = $lingkaran->luas(10);
 echo $test;
 echo $lingkaran->phi();
+
+//contstructor
+class Fruit{
+    public $name;
+
+    function __construct($name)
+    {
+        $this->name = $name;
+    }
+
+    //destructor
+    function __destruct()
+    {
+        echo 'lmao dek';
+    }
+
+    function getName(){
+        return $this->name;
+    }
+}
+
+$apple = new Fruit("Apel");
+echo $apple->getName();
+
+
+class Number{
+    public $angka;
+    public $angka2;
+    function __construct($angka, $angka2)
+    {
+        $this->angka = $angka;
+        $this->angka2 = $angka2;
+    }
+    function getAngka1(){
+        return $this->angka;
+    }
+    function getAngka2(){
+        return $this->angka2;
+    }
+}
+
+$angka = new Number(10,50);
+echo $angka->getAngka1() + $angka->getAngka2();
+
+
+//inheritance
+
+class Animal {
+    private $jenis;
+    public function setJenis($jenis){
+        $this->jenis = $jenis;
+    }
+    public function getJenis(){
+        return $this->jenis;
+    }
+}
+
+class Goat extends Animal {}
+class Tiger extends Animal {}
+class Messi extends Animal {}
+
+$goat = new Goat;
+$tiger = new Tiger;
+$messi = new Messi;
+
+$goat->setJenis('herbivora');
+$tiger->setJenis('karnivora');
+$messi->setJenis('omniman');
+
+echo $goat->getJenis();
+echo $tiger->getJenis();
+echo $messi->getJenis();
+
+//Polymorphism
+
+class Hewan{
+    public function sound(){
+        echo 'test suara hewan';
+    }
+}
+
+class Duck extends Hewan{
+    public function sound(){
+        echo 'suara bebek wkwkwk';
+    }
+}
+class Cat extends Hewan{
+    public function sound(){
+        echo 'suara kucing miao';
+    }
+}
+
+$duck = new Duck;
+$cat = new Cat;
+
+$duck->sound();
+$cat->sound();
+
+$hewan = new Hewan;
+$hewan->sound();
+
 ?>
