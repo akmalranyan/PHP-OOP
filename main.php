@@ -407,28 +407,28 @@ class Ferrari implements Kendaraan, Body{
 }
 
 interface kali{
-    public function perkalian($a, $b);
+    public function perkalian(string $a, $b);
 }
 interface bagi{
-    public function pembagian($a, $b);
+    public function pembagian(string $a, $b);
 }
 interface tambah{
-    public function pertambahan($a, $b);
+    public function pertambahan(string $a, $b);
 }
 interface kurang{
-    public function pengurangan($a, $b);
+    public function pengurangan(string $a, $b);
 }
 
 class kalibagi implements kali, bagi{
     public $a;
     public $b;
-    public function perkalian($a, $b){
+    public function perkalian(string $a, $b){
         $this->a=$a;
         $this->b=$b;
         return $this->a*$this->b;
 }
-public function pembagian($a, $b){
-    $this->a=$a;
+public function pembagian(string $a, $b){
+    $this->a=$a; 
     $this->b=$b;
     return $this->a/$this->b;
 }
@@ -437,12 +437,12 @@ public function pembagian($a, $b){
 class tambahkurang implements tambah, kurang{
     public $a;
     public $b;
-    public function pertambahan($a, $b){
+    public function pertambahan(string $a, $b){
         $this->a=$a;
         $this->b=$b;
         return $this->a+$this->b;
 }
-public function pengurangan($a, $b){
+public function pengurangan(string $a, $b){
     $this->a=$a;
     $this->b=$b;
     return $this->a-$this->b;
@@ -459,4 +459,96 @@ echo $tambah ->pertambahan(6, 3);
 echo '<br>';
 $kurang = new tambahkurang();
 echo $kurang ->pengurangan(6,4);
+echo '<br>';
+
+//method chaining
+
+class Robot{
+    public $suara;
+    public $berat;
+    public function setSuara(int $suara){
+        $this -> suara = $suara;
+        return $this;
+    }
+    public function setBerat($berat){
+        $this -> berat = $berat;
+        return $this;
+    }
+}
+
+
+$robot = new Robot;
+$robot -> setSuara('method chaining') -> setBerat(10);
+echo $robot -> suara. '-'. $robot -> berat;
+echo '<br>';
+
+
+//Scalar type hinting
+
+class ParameterCasting{
+    public function __construct(array $arrayType){}
+    public function StringCast(string $stringType){}
+    public function intCast(int $intType){}
+    public function floatCast(float $floatType){}
+    public function booleanCast(bool $booleanType){}
+}
+
+$object = new ParameterCasting(array());
+
+
+//object type hinting
+
+class Post{
+    public $title;
+    public $content;
+    public function __construct(?string $title, $content)
+    {
+        $this -> title = $title;
+        $this -> content = $content;
+    }
+
+    public function getTitle(){
+        return $this -> title;
+    }
+
+    public function getContent(){
+        return $this -> content;
+    }
+}
+
+class StringMutator{
+    public static function bold(?string $word){
+        return sprintf('<b>%s</b>', $word);
+    }
+    public static function italic(?string $word){
+        return sprintf('<i>%s</i>', $word);
+    }
+    public static function underlined(?string $word){
+        return sprintf('<u>%s</u>', $word);
+    }
+    public static function strike(?string $word){
+        return sprintf('<strike>%s</strike>', $word);
+    }
+}
+
+class PostMutator extends StringMutator{
+    public $post;
+    public function __construct(Post $post)
+    {
+        $this -> post = $post;
+    }
+
+    public function getBoldTitle(){
+        return parent::underlined($this -> post -> getTitle());
+    }
+    public function getBoldContent(){
+        return parent::strike($this -> post -> getContent());
+    }
+}
+
+$post = new Post('oke','testing');
+$mutator = new PostMutator($post);
+echo $mutator -> getBoldTitle().' '.$mutator ->getBoldContent();
+
+
 ?>
