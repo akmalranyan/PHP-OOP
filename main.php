@@ -466,7 +466,7 @@ echo '<br>';
 class Robot{
     public $suara;
     public $berat;
-    public function setSuara(int $suara){
+    public function setSuara($suara){
         $this -> suara = $suara;
         return $this;
     }
@@ -507,11 +507,11 @@ class Post{
         $this -> content = $content;
     }
 
-    public function getTitle(){
+    public function getTitle() :int{
         return $this -> title;
     }
 
-    public function getContent(){
+    public function getContent() :int{
         return $this -> content;
     }
 }
@@ -539,16 +539,100 @@ class PostMutator extends StringMutator{
     }
 
     public function getBoldTitle(){
+        return parent::bold($this -> post -> getTitle());
+    }
+    public function getItalicTitle(){
+        return parent::italic($this -> post -> getTitle());
+    }
+    public function getUnderlinedTitle(){
         return parent::underlined($this -> post -> getTitle());
     }
-    public function getBoldContent(){
+    public function getStrikeContent(){
         return parent::strike($this -> post -> getContent());
     }
 }
 
-$post = new Post('oke','testing');
+$post = new Post(true, false);
 $mutator = new PostMutator($post);
-echo $mutator -> getBoldTitle().' '.$mutator ->getBoldContent();
+echo $mutator -> getBoldTitle().' '.$mutator ->getItalicTitle().' '.$mutator ->getUnderlinedTitle().' '.$mutator ->getStrikeContent();
+echo '<br>';
+
+//factorial non-recursive
+class Factorial{
+    public static function nonRecursive(int $number){
+        $result = 1;
+        for($i = 1; $i <= $number; $i++){
+            //operator assignment
+            $result *= $i;
+        }
+        return $result;
+    }
+    //factorial recursive
+    public static function Recursive(int $number){
+        if(2>$number){
+            return $number;
+        }else{
+            return $number*self::Recursive($number-1);
+        }
+    }
+}
+
+echo Factorial::nonRecursive(5);
+echo'<br>';
+echo Factorial::Recursive(5);
+echo'<br>';
+
+// recursive stack overflow
+function loop(int $value){
+    if($value == 0){
+        echo 'selesai';
+    }else{
+        echo 'perulangan ke-'.$value;
+        loop($value-1);
+    }
+}
+loop(10);
+echo '<br>';
+
+//recursive fibonacci
+class Fibonacci{
+    public static function calculate(int $limit){
+        if(0===$limit || 1 ===$limit){
+            return $limit;
+        }
+        if(2===$limit){
+            return 1;
+        }
+        return self::calculate($limit-1)+self::calculate($limit-2);
+    }
+}
+echo Fibonacci::calculate(4);
+echo '<br>';
+
+//late static binding
+class stringMutate{
+    public static function Bolding(string $word):string{
+        return sprintf('<b>%s</b>', $word);
+    }
+    public static function Italicin(string $word):string{
+        return sprintf('<i>%s</i>', $word);
+    }
+    public static function BoldItalic(string $word):string{
+        return self::Bolding(static::Italicin($word));
+    }
+}
+
+class childMutator extends stringMutate{
+    public static function Bolding(string $word):string{
+        return '<b>STATIC LATE BINDING</b>';
+    }
+    public static function Italicin(string $word):string{
+        return '<i>STATIC LATE BINDING</i>';
+    }
+}
+
+echo childMutator::BoldItalic('Yessir');
+
 
 
 ?>
