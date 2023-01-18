@@ -632,7 +632,82 @@ class childMutator extends stringMutate{
 }
 
 echo childMutator::BoldItalic('Yessir');
+echo '<br>';
 
 
+//trait
+trait SayHello{
+    public function SayHello(){
+        echo 'Hello';
+        return $this;
+    }
+}
+
+trait SayGoodbye{
+    public function SayGoodbye(){
+        echo 'byee';
+        return $this;
+    }
+}
+
+trait Greets{
+    use SayHello, SayGoodbye;
+}
+
+class Message{
+    use Greets;
+}
+
+
+
+$Message = new Message();
+$Message -> SayHello() -> SayGoodbye(); 
+
+//exception handling
+function CheckNum($num1, $num2){
+    if($num1 == 0 || $num2 == 0){
+        throw new Exception('Value must be 1 or above');
+    }else{
+        return $num1 % $num2;
+    }
+}
+
+try{
+    CheckNum(10, 0);
+}catch(Exception $e){
+    echo'<br>';
+    echo 'Error in'.$e->getMessage();
+}
+
+//closure-lambda-anonymous function
+function Introduce($fullname, $action){
+    $fullname = $action($fullname);
+    return "Perkenalkan Nama Saya $fullname";
+}
+
+echo introduce('althaf', function ($fullname){
+    return strtoupper($fullname);
+});
+echo '<br>';
+
+
+function Nama($namanya, $bold){
+    $namanya = $bold($namanya);
+    return "Nama ana $namanya";
+}
+
+echo Nama('Akmal', function ($namanya){
+    return sprintf("<b>$namanya</b>");
+});
+echo '<br>';
+
+function Name($namefull, $aksi1, $body, $body2){
+    $body = $aksi1($body);
+    return "My Name is $namefull, Im a $body $body2 man";
+}
+
+echo Name('Wayne Rooney', function($body){
+    return sprintf("<strike>$body</strike>");
+}, 'slim', 'fat')
 
 ?>
