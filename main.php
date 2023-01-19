@@ -708,6 +708,74 @@ function Name($namefull, $aksi1, $body, $body2){
 
 echo Name('Wayne Rooney', function($body){
     return sprintf("<strike>$body</strike>");
-}, 'slim', 'fat')
+}, 'slim', 'fat');
+echo '<br>';
+
+
+//variadic function
+function mean(){
+    $args = func_get_args();
+    return array_sum($args) / count($args);
+}
+
+echo mean(1, 2, 6);
+
+function sum(...$args){
+    return $args[0] + $args[3];
+}
+
+echo sum(0,1,2,3,4,5);
+
+//magic method
+class Device{
+    public $name;
+    public $battery;
+    public $data = array();
+    public $connection;
+
+    public function __construct(Battery $battery, $name){
+        $this -> battery = $battery;
+        $this -> name = $name;
+        $this -> Connect();
+    }
+
+    public function __destruct(){
+        $this -> Disconnect();
+        echo $this -> name .'was Destroyed';
+        echo '<br>'; 
+    }
+    
+       
+    
+    
+
+    protected function Connect(){
+        $this -> connection = 'resource';
+        echo $this -> name . 'Connected';
+
+    }
+    protected function Disconnect(){
+        $this -> connection = null;
+        echo $this -> name . 'Disconnected';
+    }
+}
+
+class Battery{
+    private $charge = 0;
+    public function setCharge($charge){
+        $charge = (int)$charge;
+        if($charge < 0){
+            $charge = 0;
+        }
+        else if($charge > 100){
+            $charge = 100;
+        }
+        $this -> charge = $charge;
+}
+}
+
+$device = new Device(new Battery, 'Android');
+echo $device -> name;
+
 
 ?>
